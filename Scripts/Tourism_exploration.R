@@ -8,8 +8,15 @@ data$Month<-as.integer(data$Month)#convert the months in factors
 data$Date<-as.POSIXct(strptime(paste(data$Year,data$Month,rep(1,nrow(data)),sep='-'),'%Y-%m-%d')) 
 #Plots
 plot(data$Date,data$N_touristMPA,type='b')
-ggplot(data,mapping = aes(x=Date,y=N_touristMPA))+
-  geom_line()+ geom_point()+geom_smooth(method='lm', se = FALSE)
+ggplot(data,mapping = aes(x=Date, y=N_touristMPA)) +
+  geom_line()+
+geom_smooth(method='lm', se = FALSE)
+
+ggplot(data,mapping = aes(x=as.factor(Month),y=N_touristMPA,group=as.factor(Year)))+
+  geom_line(aes(color=as.factor(Year)))+
+  geom_point(aes(color=as.factor(Year)))+
+  scale_color_viridis_d(option = "D", end = 0.7)
+
 ggplot(data,mapping = aes(x=Date,y=N_touristMPA,factor=Month))+
   geom_line()+ geom_point()+geom_smooth(method='lm')+
   facet_wrap(~Month)
