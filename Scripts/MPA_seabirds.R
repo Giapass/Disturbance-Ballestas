@@ -3,6 +3,7 @@ library(cowplot)
 library(tidyr)
 library(ggplot2)
 library(dplyr)
+library(patchwork)
 # path_Data<-'./Data/Seabirds/'
 # agro03_18<-read.csv2(paste0(path_Data,"CENSO DE AVES 2003 - 2019 OFICIAL.csv"),header=TRUE)
 # names(agro03_18)
@@ -37,24 +38,30 @@ MPA_south<-read.csv(paste0(path_Data,'MPA_south_seabirds.csv'),header = TRUE)
 head(MPA_south)
 #Cormorant total
 MPA_south<-MPA_south%>%mutate(Date=as.POSIXct(Date))
-MPA_south%>%ggplot(aes(x=Date,y=TotC,group=Colony))+
-  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))
+plot_1<-MPA_south%>%ggplot(aes(x=Date,y=TotC,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Cormorant total abundance")
 #Booby total
-MPA_south%>%ggplot(aes(x=Date,y=TotB,group=Colony))+
-  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))
+plot_1<-MPA_south%>%ggplot(aes(x=Date,y=TotB,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Booby total abundance")
 #Pelican total
-MPA_south%>%ggplot(aes(x=Date,y=TotP,group=Colony))+
-  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))
+plot_3<-MPA_south%>%ggplot(aes(x=Date,y=TotP,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Pelican total abundance")
 #Cormorant Breeding
-MPA_south%>%ggplot(aes(x=Date,y=BrC,group=Colony))+
-  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))
+plot_4<-MPA_south%>%ggplot(aes(x=Date,y=BrC,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Cormorant breeder abundance")
 #Booby Breeding
-MPA_south%>%ggplot(aes(x=Date,y=BrB,group=Colony))+
-  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))
+plot_5<-MPA_south%>%ggplot(aes(x=Date,y=BrB,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Booby breeder abundance")
 #Pelican Breeding
-MPA_south%>%ggplot(aes(x=Date,y=BrP,group=Colony))+
-  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))
-
+plot_6<-MPA_south%>%ggplot(aes(x=Date,y=BrP,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Pelican breeder abundance")
+(plot_1|plot_2|plot_3)/(plot_4| plot_5|plot_6)
 
 
 
