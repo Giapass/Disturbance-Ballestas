@@ -1,5 +1,6 @@
 READ ME
 
+File TOurism
 1) Visit_ballestas0820.csv-> Monthly abundance of visits to Ballestas island from 2008 to 2020
 -Year
 -Month
@@ -9,7 +10,7 @@ Nota:  Según la Capitanía de Pisco, en el año 2011 disminuyeron las llegadas de 
 2018 Cifra preliminar
 ELABORACIÓN:  MINCETUR/VMT/DGIETA-DIAITA
 http://datosturismo.mincetur.gob.pe/appdatosTurismo/Content2.html
--N_touristMPA:SOURCE SERNANP (Servicio Nacional de Areas Naturales Protegidas)
+-N_touristMPA: Data to be used, SOURCE SERNANP (Servicio Nacional de Areas Naturales Protegidas)
 A partir de enero 2011 la información corresponde a la fuente de SERNANP.
 De Abril a Septiembre año 2020 registra data 0 ya que el 16 de Marzo el Gobierno declaró estado 
 de emergencia nacional con Decreto Supremo N° 044-2020-PCM a consecuencia del brote del COVID-19.
@@ -30,6 +31,8 @@ Other island of interest:
 - Punta Coles (Moquegua)
 - Punta San Juan (Ica)
 
+File Maps
+
 3)Area_MPA
 -MPA:	Name of the MPA
 -x_utm18S:in m, areas 18S	
@@ -37,8 +40,22 @@ Other island of interest:
 -Latitude:In decimal degrees	
 -Longitude: In decimal degrees
 
+4)Ica_grid10.shp grid to use for fisheries effort
 
 
+File Fisheries
 
+5)Daily_landingsAnchovy1520MPA.csv
+
+
+File Seabirds
+
+6) MPA_south_seabirds.csv
+
+File Environmental
+
+7) ERA5Year_10m.nc : Wind speed from https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=overview
+
+Hourly resolution each 0.25° . Accesed 10th Dec 2020
 
 
