@@ -4,7 +4,7 @@ library(tidyr)
 library(ggplot2)
 library(dplyr)
 library(patchwork)
-# path_Data<-'./Data/Seabirds/'
+ path_Data<-'./Data/Seabirds/'
 # agro03_18<-read.csv2(paste0(path_Data,"CENSO DE AVES 2003 - 2019 OFICIAL.csv"),header=TRUE)
 # names(agro03_18)
 # agro03_18<-agro03_18%>%mutate(Date=as.POSIXct(strptime(paste(agro03_18$Ano,
@@ -42,7 +42,7 @@ plot_1<-MPA_south%>%ggplot(aes(x=Date,y=TotC,group=Colony))+
   geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
   ggtitle("Cormorant total abundance")
 #Booby total
-plot_1<-MPA_south%>%ggplot(aes(x=Date,y=TotB,group=Colony))+
+plot_2<-MPA_south%>%ggplot(aes(x=Date,y=TotB,group=Colony))+
   geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
   ggtitle("Booby total abundance")
 #Pelican total
@@ -63,6 +63,36 @@ plot_6<-MPA_south%>%ggplot(aes(x=Date,y=BrP,group=Colony))+
   ggtitle("Pelican breeder abundance")
 (plot_1|plot_2|plot_3)/(plot_4| plot_5|plot_6)
 
+#ALL CHINCHA TOGETHER
+suma = function(x) if (all(is.na(x))) x[NA_integer_] else sum(x, na.rm = TRUE)
+MPA_south_CH<-MPA_south%>%group_by(Date)%>%filter(Colony %in% c('CHN','CHS','CHC'))%>%
+  summarise_at(vars(-Colony,-Year,-Month),suma)%>%mutate(Colony='CH',Month=as.integer(format(Date,'%m')),
+  Year=as.integer(format(Date,'%Y')))%>%relocate(Colony,Month,Year, Date)
+MPA_south_short<-MPA_south%>%filter(Colony=='BA')%>%bind_rows(.,MPA_south_CH)
 
+#Cormorant total
 
-
+plot_1<-MPA_south_short%>%ggplot(aes(x=Date,y=TotC,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Cormorant total abundance")
+#Booby total
+plot_2<-MPA_south_short%>%ggplot(aes(x=Date,y=TotB,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Booby total abundance")
+#Pelican total
+plot_3<-MPA_south_short%>%ggplot(aes(x=Date,y=TotP,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Pelican total abundance")
+#Cormorant Breeding
+plot_4<-MPA_south_short%>%ggplot(aes(x=Date,y=BrC,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Cormorant breeder abundance")
+#Booby Breeding
+plot_5<-MPA_south_short%>%ggplot(aes(x=Date,y=BrB,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Booby breeder abundance")
+#Pelican Breeding
+plot_6<-MPA_south_short%>%ggplot(aes(x=Date,y=BrP,group=Colony))+
+  geom_line(aes(colour=Colony))+geom_point(aes(colour=Colony))+
+  ggtitle("Pelican breeder abundance")
+(plot_1|plot_2|plot_3)/(plot_4| plot_5|plot_6)
